@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    tools:context=".SubredditActivity">
+    <TextView
+        android:id="@+id/score_textview"
+        android:layout_width="40dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:background="@android:color/darker_gray"
+        tools:text="87"/>
+    <TextView
+        android:id="@+id/body_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textStyle="bold"
+        tools:text="Title"/>
+</LinearLayout>
