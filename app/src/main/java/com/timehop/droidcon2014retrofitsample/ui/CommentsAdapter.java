@@ -11,6 +11,7 @@ import com.timehop.droidcon2014retrofitsample.R;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditComment;
 
 public class CommentsAdapter extends ArrayAdapter<RedditComment> {
+
   public CommentsAdapter(Context context) {
     super(context, R.layout.view_comment);
   }
@@ -40,7 +41,8 @@ public class CommentsAdapter extends ArrayAdapter<RedditComment> {
       }
       vh.scoreTextView.setText(String.valueOf(comment.getScore()));
       vh.bodyTextView.setText(comment.getBody());
-      final int padding = getContext().getResources().getDimensionPixelSize(R.dimen.comment_padding);
+      final int padding = getContext().getResources()
+              .getDimensionPixelSize(R.dimen.comment_padding);
       convertView.setPadding(comment.getDepth() * padding, 0, 0, 0);
       return convertView;
   }
