@@ -25,6 +25,7 @@ public class VenueSearchActivity extends Activity {
   public static final String EXTRA_LOCATION = "location";
   private ListView mListView;
   private VenueAdapter mAdapter;
+  private ProgressDialog mProgressDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -36,24 +37,26 @@ public class VenueSearchActivity extends Activity {
     mAdapter = new VenueAdapter(this);
     mListView.setAdapter(mAdapter);
 
-    final ProgressDialog progressDialog = new ProgressDialog(this);
-    progressDialog.setMessage("Loading venues...");
-    progressDialog.setCancelable(false);
-    progressDialog.show();
+    mProgressDialog = new ProgressDialog(this);
+    mProgressDialog.setMessage("Loading venues...");
+    mProgressDialog.setCancelable(false);
+    mProgressDialog.show();
 
     FoursquareService.Implementation.get().searchVenues(location,
         new Callback<FoursquareResponse>() {
           @Override
           public void success(FoursquareResponse foursquareResponse, Response response) {
-            progressDialog.dismiss();
+            if (isDestroyed()) return;
+            mProgressDialog.dismiss();
             List<Venue> venues = foursquareResponse.getResponse().getVenues();
             onVenuesReceived(venues);
           }
 
           @Override
           public void failure(RetrofitError error) {
+            if (isDestroyed()) return;
             Log.e(TAG, "Failed to load venues", error);
-            progressDialog.dismiss();
+            mProgressDialog.dismiss();
             String message = "Loading failed :(";
             try {
               throw (error.getCause());
@@ -76,6 +79,12 @@ public class VenueSearchActivity extends Activity {
                 .show();
           }
         });
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    mProgressDialog.dismiss();
   }
 
   private void onVenuesReceived(List<Venue> venues) {

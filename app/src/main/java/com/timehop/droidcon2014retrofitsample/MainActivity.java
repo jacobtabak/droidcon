@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.widget.EditText;
 
-
 public class MainActivity extends ActionBarActivity {
 
   private EditText mLocationEditText;
