@@ -12,21 +12,36 @@ import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditLink;
 
 public class LinkAdapter extends ArrayAdapter<RedditLink> {
   public LinkAdapter(Context context) {
-    super(context, 0);
+    super(context, R.layout.view_link);
   }
+
+    private static class ViewHolder {
+
+        private final TextView scoreTextView;
+        private final TextView titleTextView;
+        private final TextView authorTextView;
+
+        private ViewHolder(final View view) {
+            scoreTextView = (TextView) view.findViewById(R.id.score_textview);
+            titleTextView = (TextView) view.findViewById(R.id.title_textview);
+            authorTextView = (TextView) view.findViewById(R.id.author_textview);
+        }
+    }
 
   @Override
   public View getView(int position, View convertView, ViewGroup parent) {
-    RedditLink link = getItem(position);
-    View view = LayoutInflater.from(getContext()).inflate(R.layout.view_link, parent, false);
-    TextView scoreTextView = (TextView) view.findViewById(R.id.score_textview);
-    TextView titleTextView = (TextView) view.findViewById(R.id.title_textview);
-    TextView authorTextView = (TextView) view.findViewById(R.id.author_textview);
-
-    scoreTextView.setText(String.valueOf(link.getScore()));
-    titleTextView.setText(String.valueOf(link.getTitle()));
-    authorTextView.setText(String.valueOf(link.getAuthor()));
-
-    return view;
+      final RedditLink link = getItem(position);
+      final ViewHolder vh;
+      if (convertView == null) {
+          convertView = LayoutInflater.from(getContext()).inflate(R.layout.view_link, parent, false);
+          vh = new ViewHolder(convertView);
+          convertView.setTag(vh);
+      } else {
+          vh = (ViewHolder) convertView.getTag();
+      }
+      vh.scoreTextView.setText(String.valueOf(link.getScore()));
+      vh.titleTextView.setText(String.valueOf(link.getTitle()));
+      vh.authorTextView.setText(String.valueOf(link.getAuthor()));
+    return convertView;
   }
 }
