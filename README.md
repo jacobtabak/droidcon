@@ -104,3 +104,7 @@ the correct model.
 RedditObjectWrapper wrapper = new Gson().fromJson(json, RedditObjectWrapper.class);
       return context.deserialize(wrapper.data, wrapper.kind.getDerivedClass());
 ```
+
+Persisting Cookies
+------------------
+Check out [this gist](http://git.io/U2rqkg) for an easy way to persist cookies.
