@@ -10,11 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.timehop.droidcon2014retrofitsample.data.reddit.RedditService;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditLink;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditListing;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditObject;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditResponse;
-import com.timehop.droidcon2014retrofitsample.data.reddit.RedditService;
 import com.timehop.droidcon2014retrofitsample.ui.LinkAdapter;
 
 import retrofit.Callback;
