@@ -19,7 +19,7 @@ public class LinkAdapter extends ArrayAdapter<RedditLink> {
   private static final int RED_HOT = 1000;
 
   public LinkAdapter(Context context) {
-    super(context, R.layout.view_link);
+    super(context, 0);
   }
 
     private static class ViewHolder {
@@ -49,15 +49,22 @@ public class LinkAdapter extends ArrayAdapter<RedditLink> {
     vh.scoreTextView.setText(String.valueOf(link.getScore()));
     vh.titleTextView.setText(String.valueOf(link.getTitle()));
     vh.authorTextView.setText(String.valueOf(link.getAuthor()));
-    final StateListDrawable sld = new StateListDrawable();
-    sld.addState(new int[]{android.R.attr.state_pressed},
-        new ColorDrawable(getScoreColor(link.getScore())));
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-        convertView.setBackground(sld);
-    } else {
-        convertView.setBackgroundDrawable(sld);
-    }
+    setBackgroundColor(convertView, link.getScore());
     return convertView;
+  }
+
+  /*
+   * set a background based on score, just for kicks
+   */
+  private static void setBackgroundColor(final View view, final int score) {
+      final StateListDrawable sld = new StateListDrawable();
+      sld.addState(new int[]{android.R.attr.state_pressed},
+              new ColorDrawable(getScoreColor(score)));
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+          view.setBackground(sld);
+      } else {
+          view.setBackgroundDrawable(sld);
+      }
   }
 
   private static int getScoreColor(final int score) {

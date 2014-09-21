@@ -13,7 +13,7 @@ import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditComment;
 public class CommentsAdapter extends ArrayAdapter<RedditComment> {
 
   public CommentsAdapter(Context context) {
-    super(context, R.layout.view_comment);
+    super(context, 0);
   }
 
     private static class ViewHolder {

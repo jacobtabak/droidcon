@@ -13,7 +13,7 @@ import com.timehop.droidcon2014retrofitsample.data.foursquare.model.Venue;
 public class VenueAdapter extends ArrayAdapter<Venue> {
 
   public VenueAdapter(Context context) {
-    super(context, R.layout.view_venue);
+    super(context, 0);
   }
 
     private static class ViewHolder {
