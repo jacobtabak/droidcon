@@ -114,9 +114,6 @@ public class RedditTests extends ApplicationTestCase<Application> {
    * helper function to assert comments response is valid
    */
   private void assertComments(List<RedditResponse<RedditListing>> response) {
-    Assert.assertNotNull(response);
-    assertNotNull(response.get(0));
-    assertNotNull(response.get(1));
     // very the first listing only has links
     for (RedditObject child : response.get(0).getData().getChildren()) {
       Assert.assertTrue(child instanceof RedditLink);
