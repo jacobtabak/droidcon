@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,6 +50,7 @@ public class CommentsActivity extends Activity {
           @Override
           public void success(List<RedditResponse<RedditListing>> listings, Response response) {
             progressDialog.dismiss();
+            findViewById(R.id.divider).setVisibility(View.VISIBLE);
             onListingsReceived(listings);
           }
 
