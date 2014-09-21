@@ -1,5 +1,8 @@
 package com.timehop.droidcon2014retrofitsample.data.reddit.model;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
+
 public class RedditSubmission extends RedditObject {
   String banned_by;
   String subreddit;
@@ -9,9 +12,9 @@ public class RedditSubmission extends RedditObject {
   String author;
   int score;
   String name;
-  long created;
+  LocalDateTime created;
   String author_flair_text;
-  long created_utc;
+  DateTime created_utc;
   int ups;
 
   public String getBannedBy() {
@@ -46,7 +49,7 @@ public class RedditSubmission extends RedditObject {
     return name;
   }
 
-  public long getCreated() {
+  public LocalDateTime getCreated() {
     return created;
   }
 
@@ -54,7 +57,7 @@ public class RedditSubmission extends RedditObject {
     return author_flair_text;
   }
 
-  public long getCreatedUtc() {
+  public DateTime getCreatedUtc() {
     return created_utc;
   }
 

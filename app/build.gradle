@@ -31,4 +31,5 @@ dependencies {
     debugCompile 'com.squareup.retrofit:retrofit-mock:1.6.1'
     compile 'com.netflix.rxjava:rxjava-core:0.20.4'
     compile 'com.netflix.rxjava:rxjava-android:0.20.4'
+    compile 'joda-time:joda-time:2.4'
 }

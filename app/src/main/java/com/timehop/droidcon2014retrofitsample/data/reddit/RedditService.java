@@ -7,6 +7,9 @@ import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditListing;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditObject;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditResponse;
 
+import org.joda.time.DateTime;
+import org.joda.time.LocalDateTime;
+
 import java.util.List;
 
 import retrofit.Callback;
@@ -53,6 +56,8 @@ public interface RedditService {
     private static Gson getGson() {
       return new GsonBuilder()
           .registerTypeAdapter(RedditObject.class, new RedditObjectDeserializer())
+          .registerTypeAdapter(DateTime.class, new DateTimeDeserializer())
+          .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeDeserializer())
           .create();
     }
   }
