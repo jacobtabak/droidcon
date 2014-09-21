@@ -3,9 +3,9 @@ package com.timehop.droidcon2014retrofitsample.data.foursquare.legacy;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.timehop.droidcon2014retrofitsample.data.foursquare.api.FoursquareResponse;
 import com.timehop.droidcon2014retrofitsample.data.foursquare.model.Category;
 import com.timehop.droidcon2014retrofitsample.data.foursquare.model.Contact;
-import com.timehop.droidcon2014retrofitsample.data.foursquare.api.FoursquareResponse;
 import com.timehop.droidcon2014retrofitsample.data.foursquare.model.Icon;
 import com.timehop.droidcon2014retrofitsample.data.foursquare.model.Location;
 import com.timehop.droidcon2014retrofitsample.data.foursquare.model.Menu;

@@ -10,11 +10,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.timehop.droidcon2014retrofitsample.data.reddit.RedditService;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditLink;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditListing;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditObject;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditResponse;
-import com.timehop.droidcon2014retrofitsample.data.reddit.RedditService;
 import com.timehop.droidcon2014retrofitsample.ui.LinkAdapter;
 
 import retrofit.Callback;
@@ -24,6 +24,7 @@ import retrofit.client.Response;
 public class SubredditActivity extends Activity {
   public static final String EXTRA_SUBREDDIT = "subreddit";
   private LinkAdapter mLinkAdapter;
+    private ProgressDialog mProgressDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -42,22 +43,24 @@ public class SubredditActivity extends Activity {
           }
         });
 
-    final ProgressDialog progressDialog = new ProgressDialog(this);
-    progressDialog.setMessage("Loading subreddit...");
-    progressDialog.setCancelable(false);
-    progressDialog.show();
+    mProgressDialog = new ProgressDialog(this);
+    mProgressDialog.setMessage("Loading subreddit...");
+    mProgressDialog.setCancelable(false);
+    mProgressDialog.show();
 
     RedditService.Implementation.get().getSubreddit(subreddit,
         new Callback<RedditResponse<RedditListing>>() {
           @Override
           public void success(RedditResponse<RedditListing> listing, Response response) {
-            progressDialog.dismiss();
+            if (isDestroyed()) return;
+            mProgressDialog.dismiss();
             onListingReceived(listing);
           }
 
           @Override
           public void failure(RetrofitError error) {
-            progressDialog.dismiss();
+            if (isDestroyed()) return;
+            mProgressDialog.dismiss();
             new AlertDialog.Builder(SubredditActivity.this)
                 .setMessage("Loading failed :(")
                 .setCancelable(false)
@@ -70,6 +73,12 @@ public class SubredditActivity extends Activity {
                 .show();
           }
         });
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    mProgressDialog.dismiss();
   }
 
   private void showComments(RedditLink item) {

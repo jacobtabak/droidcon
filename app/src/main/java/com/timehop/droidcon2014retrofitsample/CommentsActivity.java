@@ -5,16 +5,17 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.timehop.droidcon2014retrofitsample.data.reddit.RedditService;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditComment;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditLink;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditListing;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditObject;
 import com.timehop.droidcon2014retrofitsample.data.reddit.model.RedditResponse;
-import com.timehop.droidcon2014retrofitsample.data.reddit.RedditService;
 import com.timehop.droidcon2014retrofitsample.ui.CommentsAdapter;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class CommentsActivity extends Activity {
   private ListView mListView;
   private CommentsAdapter mAdapter;
   private ViewGroup mContentView;
+  private ProgressDialog mProgressDialog;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
@@ -40,21 +42,24 @@ public class CommentsActivity extends Activity {
     mListView = (ListView) findViewById(android.R.id.list);
     mAdapter = new CommentsAdapter(this);
     mListView.setAdapter(mAdapter);
-    final ProgressDialog progressDialog = new ProgressDialog(this);
-    progressDialog.setCancelable(false);
-    progressDialog.setMessage("Loading comments...");
-    progressDialog.show();
+    mProgressDialog = new ProgressDialog(this);
+    mProgressDialog.setCancelable(false);
+    mProgressDialog.setMessage("Loading comments...");
+    mProgressDialog.show();
     RedditService.Implementation.get().getComments(subreddit, linkId,
         new Callback<List<RedditResponse<RedditListing>>>() {
           @Override
           public void success(List<RedditResponse<RedditListing>> listings, Response response) {
-            progressDialog.dismiss();
+            if (isDestroyed()) return;
+            mProgressDialog.dismiss();
+            findViewById(R.id.divider).setVisibility(View.VISIBLE);
             onListingsReceived(listings);
           }
 
           @Override
           public void failure(RetrofitError error) {
-            progressDialog.dismiss();
+            if (isDestroyed()) return;
+            mProgressDialog.dismiss();
             new AlertDialog.Builder(CommentsActivity.this)
                 .setMessage("Loading failed :(")
                 .setCancelable(false)
@@ -67,6 +72,12 @@ public class CommentsActivity extends Activity {
                 .show();
           }
         });
+  }
+
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    mProgressDialog.dismiss();
   }
 
   private void onListingsReceived(List<RedditResponse<RedditListing>> listings) {
