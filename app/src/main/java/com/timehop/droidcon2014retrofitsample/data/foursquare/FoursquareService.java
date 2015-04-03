@@ -20,7 +20,7 @@ public interface FoursquareService {
       @Query("near") String location,
       Callback<FoursquareResponse> callback);
 
-  public static class Implementation {
+  class Implementation {
     public static FoursquareService get() {
       return getBuilder()
           .build()
